@@ -3,8 +3,9 @@ package com.example.android.architecture.blueprints.todoapp.taskdetail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.data.source.FakeTestRepository
-import com.example.android.architecture.blueprints.todoapp.tasks.TasksFilterType
-import org.hamcrest.CoreMatchers.*
+import com.example.android.architecture.blueprints.todoapp.getOrAwaitValue
+import org.hamcrest.CoreMatchers.not
+import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Rule
@@ -34,12 +35,12 @@ class TaskDetailViewModelTest {
     }
 
     @Test
-    fun addNewTask_setsNewTaskEvent() {
-//        // When adding a new task
-//        taskDetailViewModel.
-//
-//        // Then the new task event is triggered
-//        val value = taskDetailViewModel.newTaskEvent.getOrAwaitValue()
-//        assertThat(value.getContentIfNotHandled(), not(nullValue()))
+    fun editTask_setsEditTaskEvent() {
+        // When deleting a task
+        taskDetailViewModel.editTask()
+
+        // Then the new task event is triggered
+        val value = taskDetailViewModel.editTaskEvent.getOrAwaitValue()
+        assertThat(value.getContentIfNotHandled(), not(nullValue()))
     }
 }
