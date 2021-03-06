@@ -45,7 +45,9 @@ import timber.log.Timber
 class TasksFragment : Fragment() {
 
     private val viewModel by viewModels<TasksViewModel> {
-        TasksViewModel.TasksViewModelFactory(DefaultTasksRepository.getRepository(requireActivity().application))
+        TasksViewModel.TasksViewModelFactory(
+                DefaultTasksRepository.getRepository(requireActivity().application)
+        )
     }
 
     private val args: TasksFragmentArgs by navArgs()
