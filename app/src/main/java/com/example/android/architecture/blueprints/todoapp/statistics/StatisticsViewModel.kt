@@ -40,7 +40,8 @@ class StatisticsViewModel(private val tasksRepository: TasksRepository) : ViewMo
     }
 
     val activeTasksPercent = stats.map {
-        it?.activeTasksPercent ?: 0f }
+        it?.activeTasksPercent ?: 0f
+    }
     val completedTasksPercent: LiveData<Float> = stats.map { it?.completedTasksPercent ?: 0f }
     val dataLoading: LiveData<Boolean> = _dataLoading
     val error: LiveData<Boolean> = tasks.map { it is Error }
@@ -48,17 +49,17 @@ class StatisticsViewModel(private val tasksRepository: TasksRepository) : ViewMo
 
     fun refresh() {
         _dataLoading.value = true
-            viewModelScope.launch {
-                tasksRepository.refreshTasks()
-                _dataLoading.value = false
-            }
+        viewModelScope.launch {
+            tasksRepository.refreshTasks()
+            _dataLoading.value = false
+        }
     }
 
     @Suppress("UNCHECKED_CAST")
-    class StatisticsViewModelFactory (
-            private val tasksRepository: TasksRepository
+    class StatisticsViewModelFactory(
+        private val tasksRepository: TasksRepository
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel> create(modelClass: Class<T>) =
-                (StatisticsViewModel(tasksRepository) as T)
+            (StatisticsViewModel(tasksRepository) as T)
     }
 }
