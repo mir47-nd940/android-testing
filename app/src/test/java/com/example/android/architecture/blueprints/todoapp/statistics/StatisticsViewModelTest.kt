@@ -2,13 +2,11 @@ package com.example.android.architecture.blueprints.todoapp.statistics
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.android.architecture.blueprints.todoapp.MainCoroutineRule
-import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.data.source.FakeTestRepository
 import com.example.android.architecture.blueprints.todoapp.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.hamcrest.CoreMatchers.not
-import org.hamcrest.CoreMatchers.nullValue
-import org.hamcrest.MatcherAssert
+import org.hamcrest.CoreMatchers.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -36,13 +34,16 @@ class StatisticsViewModelTest {
         statisticsViewModel = StatisticsViewModel(tasksRepository)
     }
 
-//    @Test
-//    fun addNewTask_setsNewTaskEvent() {
-//        // When refreshing
-//        statisticsViewModel.refresh()
-//
-//        // Then the new task event is triggered
-//        val value = statisticsViewModel.dataLoading.getOrAwaitValue()
-//        MatcherAssert.assertThat(value, (not(nullValue())))
-//    }
+    @Test
+    fun loadTasks_loading() {
+        mainCoroutineRule.pauseDispatcher()
+
+        // WHEN refreshing
+        statisticsViewModel.refresh()
+
+        // THEN check loading status
+        assertThat(statisticsViewModel.dataLoading.getOrAwaitValue(), `is`(true))
+        mainCoroutineRule.resumeDispatcher()
+        assertThat(statisticsViewModel.dataLoading.getOrAwaitValue(), `is`(false))
+    }
 }
